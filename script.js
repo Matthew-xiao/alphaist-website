@@ -4,6 +4,7 @@ const revealItems = document.querySelectorAll(
 const thesisCards = document.querySelectorAll(".thesis-companies a");
 const socialLinks = document.querySelectorAll(".social-row a");
 const thesisIntro = document.querySelector(".thesis-intro");
+const heroVideo = document.querySelector(".hero-video");
 const documentaryMedia = document.querySelector(".documentary-media");
 const documentaryVideo = document.querySelector(".documentary-media video");
 
@@ -44,11 +45,25 @@ if ("IntersectionObserver" in window) {
 if (documentaryMedia && documentaryVideo) {
   documentaryMedia.addEventListener("mouseenter", () => {
     documentaryVideo.currentTime = 0;
-    documentaryVideo.play();
+    documentaryVideo.play().catch(() => {});
   });
 
   documentaryMedia.addEventListener("mouseleave", () => {
     documentaryVideo.pause();
     documentaryVideo.currentTime = 0;
   });
+}
+
+if (heroVideo) {
+  heroVideo.muted = true;
+  heroVideo.playsInline = true;
+  heroVideo.play().catch(() => {});
+
+  document.addEventListener(
+    "touchstart",
+    () => {
+      heroVideo.play().catch(() => {});
+    },
+    { once: true }
+  );
 }
