@@ -4,6 +4,7 @@ const revealItems = document.querySelectorAll(
 const thesisCards = document.querySelectorAll(".thesis-companies a");
 const socialLinks = document.querySelectorAll(".social-row a");
 const thesisIntro = document.querySelector(".thesis-intro");
+const pageLoader = document.querySelector(".page-loader");
 const heroVideo = document.querySelector(".hero-video");
 const documentaryMedia = document.querySelector(".documentary-media");
 const documentaryVideo = document.querySelector(".documentary-media video");
@@ -70,4 +71,46 @@ if (heroVideo) {
     },
     { once: true }
   );
+}
+
+if (pageLoader) {
+  const loaderStart = Date.now();
+  const minLoaderDuration = 3200;
+  let loaderHidden = false;
+
+  const hideLoader = () => {
+    if (loaderHidden) {
+      return;
+    }
+    loaderHidden = true;
+    const elapsed = Date.now() - loaderStart;
+    const wait = Math.max(0, minLoaderDuration - elapsed);
+    window.setTimeout(() => {
+      pageLoader.classList.add("is-hidden");
+      window.setTimeout(() => {
+        document.body.classList.add("is-hero-ready");
+      }, 750);
+    }, wait);
+  };
+
+  const readyTimeout = window.setTimeout(hideLoader, 7000);
+
+  window.addEventListener("load", () => {
+    if (!heroVideo || heroVideo.readyState >= 3) {
+      window.clearTimeout(readyTimeout);
+      window.setTimeout(hideLoader, 500);
+      return;
+    }
+
+    heroVideo.addEventListener(
+      "canplaythrough",
+      () => {
+        window.clearTimeout(readyTimeout);
+        window.setTimeout(hideLoader, 500);
+      },
+      { once: true }
+    );
+  });
+} else {
+  document.body.classList.add("is-hero-ready");
 }
