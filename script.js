@@ -42,6 +42,10 @@ if ("IntersectionObserver" in window) {
   thesisIntro?.classList.add("is-visible");
 }
 
+window.setTimeout(() => {
+  thesisIntro?.classList.add("is-visible");
+}, 400);
+
 if (documentaryMedia && documentaryVideo) {
   documentaryMedia.addEventListener("mouseenter", () => {
     documentaryVideo.currentTime = 0;
