@@ -94,29 +94,28 @@ if (pageLoader) {
   };
 
   const waitForHeroVideo = () => {
-    if (!heroVideo || heroVideo.readyState >= 3) {
+    if (!heroVideo || heroVideo.readyState >= 2) {
       window.setTimeout(hideLoader, 500);
       return;
     }
 
+    const releaseWhenVideoStarts = () => {
+      window.setTimeout(hideLoader, 300);
+    };
+
     heroVideo.addEventListener(
-      "canplaythrough",
-      () => {
-        window.setTimeout(hideLoader, 500);
-      },
+      "loadeddata",
+      releaseWhenVideoStarts,
       { once: true }
     );
     heroVideo.addEventListener(
       "canplay",
-      () => {
-        if (heroVideo.readyState >= 3) {
-          window.setTimeout(hideLoader, 500);
-        }
-      },
+      releaseWhenVideoStarts,
       { once: true }
     );
 
     heroVideo.addEventListener("error", hideLoader, { once: true });
+    window.setTimeout(hideLoader, 7600);
   };
 
   const startVideoCheck = () => {

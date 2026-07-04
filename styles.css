@@ -12,8 +12,8 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
   --space-3xl: clamp(4rem, 8vw, 6rem);
-  --font-display: "Jost", "Helvetica Neue", Arial, sans-serif;
-  --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --font-display: proxima-nova, sans-serif;
+  --font-body: proxima-nova, sans-serif;
 }
 
 * {
