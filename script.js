@@ -75,7 +75,7 @@ if (heroVideo) {
 
 if (pageLoader) {
   const loaderStart = Date.now();
-  const minLoaderDuration = 3200;
+  const minLoaderDuration = 5800;
   let loaderHidden = false;
 
   const hideLoader = () => {
@@ -93,11 +93,8 @@ if (pageLoader) {
     }, wait);
   };
 
-  const readyTimeout = window.setTimeout(hideLoader, 7000);
-
-  window.addEventListener("load", () => {
+  const waitForHeroVideo = () => {
     if (!heroVideo || heroVideo.readyState >= 3) {
-      window.clearTimeout(readyTimeout);
       window.setTimeout(hideLoader, 500);
       return;
     }
@@ -105,12 +102,32 @@ if (pageLoader) {
     heroVideo.addEventListener(
       "canplaythrough",
       () => {
-        window.clearTimeout(readyTimeout);
         window.setTimeout(hideLoader, 500);
       },
       { once: true }
     );
-  });
+    heroVideo.addEventListener(
+      "canplay",
+      () => {
+        if (heroVideo.readyState >= 3) {
+          window.setTimeout(hideLoader, 500);
+        }
+      },
+      { once: true }
+    );
+
+    heroVideo.addEventListener("error", hideLoader, { once: true });
+  };
+
+  const startVideoCheck = () => {
+    waitForHeroVideo();
+  };
+
+  if (document.readyState === "complete") {
+    startVideoCheck();
+  } else {
+    window.addEventListener("load", startVideoCheck);
+  }
 } else {
   document.body.classList.add("is-hero-ready");
 }
