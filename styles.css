@@ -466,6 +466,19 @@ h3 {
   transition: filter 300ms ease, opacity 680ms ease, transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.stock-code {
+  display: inline-flex;
+  vertical-align: 0.12em;
+  margin-left: 0.45rem;
+  padding: 0.28rem 0.48rem;
+  color: var(--paper);
+  background: color-mix(in oklch, var(--royal) 82%, transparent);
+  font-size: clamp(0.62rem, 0.78vw, 0.74rem);
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1;
+}
+
 .thesis-companies span {
   margin-top: var(--space-xs);
   font-size: clamp(0.96rem, 1.2vw, 1.12rem);
